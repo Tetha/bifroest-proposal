@@ -67,7 +67,7 @@ this include:
  - Stability. Current uptime is 1w and counting.
  - Full control via Chef.
 
-# Meritocracy (TODOish)
+# Meritocracy (TODOish: Not sure what really to write here?)
 
 I'm very convinced that a project like this should be driven by
 it's users. If someone has a compelling need for a feature, it
@@ -76,15 +76,131 @@ beneficial to be able to lean on a community of experienced users
 who can judge the features from more angles than any single
 individual can.
 
-# Community (TODO) 
+# Community (TODO: Not sure what to write here) 
 
 Bifroest will build on the monitoring and graphite community,
 as well as sysadmin communities. 
 
 
-# Core Developers (TODO)
+# Core Developers (TODO: Not sure what to write here)
 
 The core developers are the Profiling Team at Goodgame Studios,
 and Jake Farrels team. 
 
+# Alignment (TODO: Not sure what to write here)
+On application level, we are heavily building on top of Apache
+cassandra. Internally, Apache Commons and Apache Log4j are
+used.
 
+# Known Risks
+
+## Orphaned Products
+We are building our entire production monitoring on top of this
+project. Thus, there is very little risk of this project
+being orphaned.
+
+## Inexperience with Open Source
+Most initial committers from Goodgame Studios have submitted
+patches to various open source projects, for example
+Graphite Web, Gentoo, Munin or the AT Launcher. None of us
+are majorly involved in an open source project yet though.
+
+## Homogenous Developers
+
+(TODO: Jake - what's your plan here?)
+
+The developers from Goodgame Studios are all Java Developers
+with more or less operational experience on unix systems, all
+located in Hamburg, Germany. 
+
+## Reliance on salaried developers
+
+Currently, all development of bifroest occurs during salaried
+time at goodgame studios. I (Harald) would personally volunteer
+additional time, though, so the project would not evaporate
+if the salaried developers stop contributing.
+
+## Relationship with Other Apache Products
+Currently, we use Apache Cassandra, Commons Collections, 
+Commons Lang and Log4j. Further use into cluster
+control projects are to be investigated.
+
+## A Excessive Fascination with the Apache Brand
+
+As stated above, the apache foundation has a reputation to
+contain a number of very, very solid infrastructural projects,
+such as the Apache Webserver, Apache Log4j and similar projects.
+This, and our close ties to Apache Cassandra are the 
+primary reasons why I chose the ASF as the first attempt to
+include Bifroest as an open source project.
+
+I hope that the Apache brand will give Bifroest the community
+it needs to become one of the next big monitoring names.
+
+# Documentation
+
+Given that all of this is currently closed source, I cannot
+easily link to the documentation, as little of it as exists.
+
+# Initial Source
+
+The code base is a software project at goodgame studios, under
+development since about the beginning of 2014, maintained 
+by a varying team of developers. Currently, we are at 6 
+developers, though not all of them are working on this 
+project full time, given that the monitoring is but one of our
+responsibilies.
+
+# Source and Intellectual Property Submission Plan
+
+( TODO: uh, this seems kinda simple? )
+
+Mostly, I plan to drop a bunch of code, some RPM-Specs and
+some chef-configurations into several git repositories.
+
+# External Dependencies
+
+( TODO: not sure if this is detailed enough )
+
+Our only external dependencies are Java and Apache Products.
+These don't have Version issues.
+
+# Required Resources
+
+## Mailing lists
+
+ - private@bifroest.incubator.apache.org (with moderated subscriptions)
+ - dev@bifroest.incubator.apache.org
+ - commits@bifroest.incubator.apache.org
+
+## Git Repositories
+
+( TODO: We are still splitting an internal library to hand out less code here )
+
+ - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-commons.git
+ - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-bifroest.git
+ - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-streamrewriter.git
+ - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-aggregator.git
+ - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-retentions.git
+ - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-commons.git
+
+## Issue Tracking
+
+ - Jira  Bifroest (OPEN-BF)
+
+# Initial Commiters
+
+( TODO: NDAs)
+
+ - Harald Krämer (hkraemer@goodgamestudios.com)
+ - Sören Glimm (sglimm@goodgamestudios.com)
+ - Tobias Ruhe (truhe@goodgamestudios.com)
+ - Ole Claussen (oclaussen@goodgamestudios.com)
+ - Bianca Noack (bnoack@goodgamestudios.com)
+ - Antje Winker (awinker@goodgamestudios.com)
+
+ - Jake Farrel (jfarrel@apache.org)
+
+# Sponsors
+## Champion
+ - Jake Farrel
