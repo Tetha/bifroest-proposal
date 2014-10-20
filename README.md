@@ -1,206 +1,197 @@
-bifroest-proposal
+@todo:
+- Setup Bifrost github repo
+  - git@github.com:Tetha/bifrost.git
+- reach out to other mentors
+
+
+bifrost-proposal
 =================
 
 # Abstract
-Bifroest will be a storage backend for Graphite based on Apache Cassandra.
+Bifrost is a scalable time series storage backend. Its main purpose is for use
+with Graphite but can be leveraged by any application needing time series 
+storage.
 
 # Proposal
-Bifroest will provide a fully distributed, fault tolerant storage
-backend for the Graphite monitoring project. Bifroest takes the place
-of Carbon in a normal Graphite distribution. This makes it easier
-to implement a highly scalable, fault tolerant storage for a Graphite
-instance.
+Bifrost will provide a fully distributed, fault tolerant storage backend for
+the Graphite monitoring project. Bifrost takes the place of Carbon in a normal
+Graphite distribution. This makes it easier to implement a highly scalable,
+fault tolerant storage for a Graphite instance.
 
 # Background
-Graphite is one of the most widely used monitoring solutions. The 
-compelling point of Graphite is it's approach to the monitoring 
-problem: Instead of just providing a mostly static view into the
-system like Munin, Graphite provides a metric database.
+Graphite is one of the most widely used monitoring solutions. The compelling
+point of Graphite is it's approach to the monitoring problem: Instead of just
+providing a mostly static view into the system like Munin, Graphite provides a
+metric database.
 
-This metric database is fed via various Carbon interfaces. For 
-example, the easiest interface to add data to Graphite is the 
-plaintext protocol, which accepts lines in the form 
-"$metric $value $optionalTimestamp" via simple tcp sockets.
+This metric database is fed via various Carbon interfaces. For example, the
+easiest interface to add data to Graphite is the plaintext protocol, which
+accepts lines in the form "$metric $value $optionalTimestamp" via simple tcp
+sockets.
 
-On the other site, Graphite offers a REST-Interface to retrieve
-rendered PNGs, simple JSON with the data. The data can be 
-processed with a rich assortment of functions and selected
-using wildcards, making it easy to perform queries such as
-"Sum the requests per second across this set of hosts".  
+On the other site, Graphite offers a REST-Interface to retrieve rendered PNGs,
+simple JSON with the data. The data can be processed with a rich assortment of
+functions and selected using wildcards, making it easy to perform queries such
+as "Sum the requests per second across this set of hosts".
 
-This decouples data collection and data access and makes it possible
-to analyze highly complex systems with ease.
+This decouples data collection and data access and makes it possible to analyze
+highly complex systems with ease.
 
-Graphite has one painful point, though: Data Storage. It's
-possible to scale Graphite horizontally, but it's not trivial 
-and takes quite a bit of effort. However, graphite offers an
-interface to swap out the carbon storage and this is precisely
-where bifroest enters the stage.
+Graphite has one painful point, though: Data Storage. It's possible to scale
+Graphite horizontally, but it's not trivial and takes quite a bit of effort.
+However, graphite offers an interface to swap out the carbon storage and this is
+precisely where bifrost enters the stage.
 
 # Rationale
-Bifroest will simplify deployment and scaling of graphite a lot.
-With Bifroest, there is no need to modify graphite configurations
-when adding new nodes to the cassandra cluster, because Graphite 
-only knows Bifroest. The storage cluster is completely hidden 
-to the frontend. 
+Bifrost enables Graphite to seamlessly scale by detaching the storage and UI
+layers from each other. Due to this separation Bifrost enables a entirely new
+set of capabilities for any time series data management needs. Our long term
+vision is to grow a unified scalable monitoring community.
 
-Furthermore, I think the ASF is the right place for a project like
-this, because the ASF has a reputation for having very strong
-and reliable infrastructural components, such as the Apache
-webserver, Apache Hadoop, Apache Cassandra and so on. I think
-Bifroest will fit right into this lineup.
+The initial requirements for Bifrost included:
+
+ - Full Support for the Plaintext TCP Interface. This is necessary to support
+ 	tools such as Diamond, StatsD and any other existing applications
+ - Full Support for the Storage API of Graphite
+ - High performance for both Value and Key retrieval
+ - Automated aggregation of data
+ - Stability
+ - Ability to be installable via configuration managemetn (puppet, chef, etc.)
 
 # Current Status
-At Goodgamestudios, we are currently deploying the current
-version of Bifroest with a Graphite frontend as the replacement
-for Munin as our productive environment. The requirements for
-this include:
+Bifrost is currently deploying with a Graphite frontend as the replacement
+for Munin at Goodgame Studios in a productive environment.
 
- - Full Support for the Plaintext TCP Interface. This is necessary
-   to support tools such as Diamond, StatsD and a whole lot
-   of other options
- - Full Support for the Storage API of Graphite. This is necessary
-   to be considered any kind of a replacement for Carbon
- - High performance for both Value and Key retrieval
- - Aggregation of data in the database in order to not explode
-   from too much data.
- - Stability. Current uptime is 1w and counting.
- - Full control via Chef.
+# Meritocracy
+By submitting this incubator proposal, we're expressing our intent to build a
+diverse developer community around Bifrost that will conduct itself according
+to The Apache Way. We believe that this project enables a wide array of
+possibilities within the monitoring ecosystem and will be the base for many new
+users, including those in the Graphite communty, to be exposed to the Apache
+way.
 
-# Meritocracy (TODOish: Not sure what really to write here?)
+# Community
+Bifrost will spark the interest of anyone interested in scalable monitoring
+solutions and we hope to extend and grow our contributor base from the existing
+Graphite monitoring community.
 
-I'm very convinced that a project like this should be driven by
-it's users. If someone has a compelling need for a feature, it
-must be considered.  If a feature is considered, it is highly
-beneficial to be able to lean on a community of experienced users
-who can judge the features from more angles than any single
-individual can.
+# Core Developers
+The initial set of core developers are the Profiling Team at Goodgame Studios.
+During the drafting of this proposal it was discovered that another company,
+Acquia, has been working on an identical project and been contributing back to
+the Graphite community as well. Goodgame Studios has inviting this team to join
+the project to increase team diversity and help strengthen the Bifrost
+community from the very begining.
 
-# Community (TODO: Not sure what to write here) 
-
-Bifroest will build on the monitoring and graphite community,
-as well as sysadmin communities. 
-
-
-# Core Developers (TODO: Not sure what to write here)
-
-The core developers are the Profiling Team at Goodgame Studios,
-and Jake Farrels team. 
-
-# Alignment (TODO: Not sure what to write here)
-On application level, we are heavily building on top of Apache
-cassandra. Internally, Apache Commons and Apache Log4j are
-used.
+# Alignment
+The Apache Software Foundation is a natural fit to host the Bifrost project,
+given the goal of open sourcing the project and fostering a community to grow
+and support the software. Additionally, Bifrost leverages Apache Cassandra for
+storage and Apache Thrift as a transport.
 
 # Known Risks
 
 ## Orphaned Products
-We are building our entire production monitoring on top of this
-project. Thus, there is very little risk of this project
-being orphaned.
+There are two companies currently focused on building entire production
+monitoring systems on top of the Bifrost project. Thus, there is very little
+risk of this project being orphaned.
 
 ## Inexperience with Open Source
-Most initial committers from Goodgame Studios have submitted
-patches to various open source projects, for example
-Graphite Web, Gentoo, Munin or the AT Launcher. None of us
-are majorly involved in an open source project yet though.
+The initial Bifrost committers have varying levels of experience using and
+contributing to Open Source projects, however by working with our mentors and
+the Apache community we believe we will be able to quickly embrace The Apache
+Way.
 
 ## Homogenous Developers
-
-(TODO: Jake - what's your plan here?)
-
-The developers from Goodgame Studios are all Java Developers
-with more or less operational experience on unix systems, all
-located in Hamburg, Germany. 
+Bifrost starting committers are comprised from two companies, Goodgame Studios
+and Acquia. Our objective is to foster a collaberative community for anyone
+seeking a scalable monitoring solution.
 
 ## Reliance on salaried developers
-
-Currently, all development of bifroest occurs during salaried
-time at goodgame studios. I (Harald) would personally volunteer
-additional time, though, so the project would not evaporate
-if the salaried developers stop contributing.
+It is expected that Bifrost development will occur on both salaried time and on
+volunteer time, after hours. The majority of initial committers are paid by their
+employers to contribute to this project. However, they are all passionate about
+the project, and we are confident that the project will continue even if no
+salaried developers contribute to the project.
 
 ## Relationship with Other Apache Products
-Currently, we use Apache Cassandra, Commons Collections, 
-Commons Lang and Log4j. Further use into cluster
-control projects are to be investigated.
+Currently, we use Apache Cassandra, Thrift, Commons Collections, Commons Lang
+and Log4j. Further use into cluster management and control projects will be
+investigated.
 
 ## A Excessive Fascination with the Apache Brand
-
-As stated above, the apache foundation has a reputation to
-contain a number of very, very solid infrastructural projects,
-such as the Apache Webserver, Apache Log4j and similar projects.
-This, and our close ties to Apache Cassandra are the 
-primary reasons why I chose the ASF as the first attempt to
-include Bifroest as an open source project.
-
-I hope that the Apache brand will give Bifroest the community
-it needs to become one of the next big monitoring names.
+Bifrost has already attracted a stable base of developers from multiple
+companies. The reasons for joining Apache are not to advertise the project, but
+rather to demonstrate the commitment to open source by fostering a community
+focused on highly scalable monitoring and pursuing further integration with
+other Apache projects.
 
 # Documentation
-
-Given that all of this is currently closed source, I cannot
-easily link to the documentation, as little of it as exists.
+This proposal is available at http://wiki.apache.org/incubator/BifrostProposal.
+Basic build instructions and setup exist at the Bifrost github repository,
+along with the source code having thorough documentation. As part of incubation
+process we intend to improve our overall user documentation.
 
 # Initial Source
+Bifrost has been in active development since early 2014, maintained by a
+varying team of developers. Currently, there are 6 active developers, though not
+all are working on Bifrost full time, given that the monitoring is but one of
+their responsibilies.
 
-The code base is a software project at goodgame studios, under
-development since about the beginning of 2014, maintained 
-by a varying team of developers. Currently, we are at 6 
-developers, though not all of them are working on this 
-project full time, given that the monitoring is but one of our
-responsibilies.
+ - https://github.com/tetha/bifroest
 
 # Source and Intellectual Property Submission Plan
+A snapshot of the Bifrost storage backend has been posted to GitHub for review.
+All code currently hosted under the github Bifrost project will be contributed
+to the Apache Software Foundation. During incubation, the codebase will be
+available at:
 
-( TODO: uh, this seems kinda simple? )
+ - https://git-wip-us.apache.org/repo/asf/incubator-bifrost.git
 
-Mostly, I plan to drop a bunch of code, some RPM-Specs and
-some chef-configurations into several git repositories.
+mirrored at:
+
+ - https://github.com/apache/incubator-bifrost/
 
 # External Dependencies
-
-( TODO: not sure if this is detailed enough )
-
-Our only external dependencies are Java and Apache Products.
-These don't have Version issues.
+All Bifrost dependencies have Apache compatible licenses.
 
 # Required Resources
 
+## Cryptography
+Not applicable.
+
 ## Mailing lists
 
- - private@bifroest.incubator.apache.org (with moderated subscriptions)
- - dev@bifroest.incubator.apache.org
- - commits@bifroest.incubator.apache.org
+ - private@bifrost.incubator.apache.org (moderated subscription)
+ - dev@bifrost.incubator.apache.org
+ - commits@bifrost.incubator.apache.org
 
 ## Git Repositories
 
-( TODO: We are still splitting an internal library to hand out less code here )
-
- - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-commons.git
- - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-bifroest.git
- - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-streamrewriter.git
- - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-aggregator.git
- - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-retentions.git
- - https://git-wip-de.apache.org/repo/asf/incubator-bifroest-commons.git
+ - https://git-wip-us.apache.org/repo/asf/incubator-bifrost.git
 
 ## Issue Tracking
 
- - Jira  Bifroest (OPEN-BF)
+ - Jira: Bifrost (BIFROST)
 
 # Initial Commiters
 
-( TODO: NDAs)
-
- - Harald Krämer (hkraemer@goodgamestudios.com)
- - Sören Glimm (sglimm@goodgamestudios.com)
- - Tobias Ruhe (truhe@goodgamestudios.com)
- - Ole Claussen (oclaussen@goodgamestudios.com)
- - Bianca Noack (bnoack@goodgamestudios.com)
- - Antje Winker (awinker@goodgamestudios.com)
-
- - Jake Farrel (jfarrel@apache.org)
+ - Harald Krämer (hkraemer at goodgamestudios dot com)
+ - Sören Glimm (sglimm at goodgamestudios dot com)
+ - Tobias Ruhe (truhe at goodgamestudios dot com)
+ - Ole Claussen (oclaussen at goodgamestudios dot com)
+ - Bianca Noack (bnoack at goodgamestudios dot com)
+ - Antje Winker (awinker at goodgamestudios dot com)
+ - Andrew Kenney (akenney at acquia dot com)
+ - Dan Norris (dnorris at apache dot org)
+ - Jake Farrell (jfarrell at apache dot org)
 
 # Sponsors
 ## Champion
- - Jake Farrel
+ - Jake Farrell (jfarrell at apache dot org)
+
+## Nominated Mentors
+ - Jan Iversen (jani at apache dot org)
+
+## Sponsoring Entity
+ - Apache Incubator PMC
